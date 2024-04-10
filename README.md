@@ -5,7 +5,7 @@
 ## Installation
 
 ```bash
-npm install -g vsr
+npm install -g vscode-history-recovery
 ```
 
 ```bash
