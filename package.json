@@ -1,0 +1,18 @@
+{
+  "name": "vscode-folder-history",
+  "version": "1.0.0",
+  "description": "Recovery for vscode folder history",
+  "keywords": [
+    "vscode",
+    "recovery"
+  ],
+  "author": "wzwang",
+  "license": "MIT",
+  "bin": {
+    "vsr": "index.js"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "terminal-kit": "^3.1.1"
+  }
+}
