@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const { Command } = require("commander");
 const { terminal } = require("terminal-kit");
 const os = require("os");
