@@ -9,7 +9,7 @@ npm install -g vscode-history-recovery
 ```
 
 ```bash
-Usage: vsr [options] [command]
+Usage: vs-history [options] [command]
 
 A tool to recover deleted files from vscode folder history.
 

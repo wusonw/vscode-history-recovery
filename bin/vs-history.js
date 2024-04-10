@@ -152,9 +152,9 @@ const recover = (workspace) => {
 };
 
 program
-  .name("vsr")
+  .name("vs-history")
   .description("A tool to recover deleted files from vscode folder history.")
-  .version("1.0.0");
+  .version("1.0.2");
 
 program
   .command("list")

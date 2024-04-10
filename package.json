@@ -10,7 +10,7 @@
   "author": "wzwang",
   "license": "MIT",
   "bin": {
-    "vsr": "index.js"
+    "vs-recovery": "bin/vs-history.js"
   },
   "dependencies": {
     "commander": "^12.0.0",
