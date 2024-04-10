@@ -1,6 +1,7 @@
 {
   "name": "vscode-folder-history",
   "version": "1.0.0",
+  "main": "index.js",
   "description": "Recovery for vscode folder history",
   "keywords": [
     "vscode",
@@ -14,5 +15,9 @@
   "dependencies": {
     "commander": "^12.0.0",
     "terminal-kit": "^3.1.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wusonw/vsr.git"
   }
 }
