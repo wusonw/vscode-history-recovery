@@ -1,6 +1,6 @@
 {
   "name": "vscode-history-recovery",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "bin/vs-history.cjs",
   "description": "Recovery for vscode folder history",
   "keywords": [
@@ -10,7 +10,7 @@
   "author": "wzwang",
   "license": "MIT",
   "bin": {
-    "vs-recovery": "bin/vs-history.cjs"
+    "vs-history": "bin/vs-history.cjs"
   },
   "dependencies": {
     "commander": "^12.0.0",
