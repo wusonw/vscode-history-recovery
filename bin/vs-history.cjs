@@ -20,9 +20,15 @@ const isSubPath = (parentPath, childPath) => {
 
 const formatTime = (time) => {
   const date = new Date(time);
-  return `${date.getFullYear()}-${
-    date.getMonth() + 1
-  }-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+  return `${date.getFullYear()}-${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")} ${date
+    .getHours()
+    .toString()
+    .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}:${date
+    .getSeconds()
+    .toString()
+    .padStart(2, "0")}`;
 };
 
 const handlefiles = (workspace) => {
@@ -72,6 +78,7 @@ const showList = (workspace) => {
 };
 
 const recover = (workspace) => {
+  const files = handlefiles(workspace);
   const confirm = (inputTime) => {
     try {
       const time = new Date(inputTime);
@@ -88,9 +95,21 @@ const recover = (workspace) => {
             if (res) {
               terminal.cyan("yes");
               try {
-                const files = handlefiles(workspace);
+                const progressBar = terminal.nextLine(1).progressBar({
+                  width: 80,
+                  title: "Recoveing Files:",
+                  eta: true,
+                  percent: true,
+                });
+                if (files.length === 0) {
+                  progressBar.update(1);
+                  terminal.processExit(0);
+                }
                 files.forEach(
-                  ({ entry, resourcePath, historyPath, historyFolder }) => {
+                  (
+                    { entry, resourcePath, historyPath, historyFolder },
+                    fileIndex
+                  ) => {
                     const index = entry.entries.findIndex(
                       (h) => h.timestamp >= time.getTime()
                     );
@@ -110,22 +129,18 @@ const recover = (workspace) => {
                           )
                       );
                       fs.copyFileSync(fileToRecover, fileToReplace);
-                      terminal
-                        .nextLine(1)
-                        .green(`[RECOVERY]\t`)
-                        .grey(
-                          `${historyFolder}/${
-                            entry.entries[index].id
-                          } -> ${path.relative(workspace, fileToReplace)}`
-                        );
+                    }
+                    const progress = fileIndex / (files.length - 1);
+                    progressBar.update(progress);
+
+                    if (progress >= 1) {
+                      // Cleanup and exit
+                      setTimeout(function () {
+                        terminal.processExit(0);
+                      }, 200);
                     }
                   }
                 );
-                terminal
-                  .nextLine(1)
-                  .green(`[SUCCESS]\t`)
-                  .grey("Recovery done!");
-                terminal.processExit(0);
               } catch (e) {
                 terminal.error.nextLine(1).red("[ERROR]\t").grey(e.message);
                 terminal.processExit(1);
@@ -143,10 +158,21 @@ const recover = (workspace) => {
     }
   };
   terminal.yellow("Which to go back to? (YYYY-MM-DD HH:mm:ss) ");
+  const times = [
+    ...new Set(
+      files
+        .map((f) => f.entry.entries)
+        .flat()
+        .map((e) => formatTime(e.timestamp))
+    ),
+  ];
   terminal.inputField(
     {
       cancelable: true,
       default: formatTime(new Date()),
+      autoComplete: times,
+      autoCompleteHint: true,
+      autoCompleteMenu: true,
     },
     (_, input) => confirm(input)
   );
