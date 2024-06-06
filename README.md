@@ -1,4 +1,4 @@
-# VSR
+# vscode-history-recovery
 
 > a vscode timeline history file recovery cli tool
 
